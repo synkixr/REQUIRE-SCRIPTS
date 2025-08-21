@@ -1,0 +1,169 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local function build()
+    if not player or not player:FindFirstChild("PlayerGui") then return end
+    if player.PlayerGui:FindFirstChild("RequireScriptsGui") then player.PlayerGui.RequireScriptsGui:Destroy() end
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "RequireScriptsGui"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    ScreenGui.Parent = player.PlayerGui
+
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Name = "MainFrame"
+    MainFrame.Parent = ScreenGui
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+    MainFrame.Size = UDim2.new(0,360,0,320)
+    MainFrame.Position = UDim2.new(0.5,-180,0.5,-160)
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+
+    local TitleBar = Instance.new("Frame")
+    TitleBar.Parent = MainFrame
+    TitleBar.BackgroundColor3 = Color3.fromRGB(45,45,45)
+    TitleBar.Size = UDim2.new(1,0,0,30)
+    TitleBar.Position = UDim2.new(0,0,0,0)
+
+    local Title = Instance.new("TextLabel")
+    Title.Parent = TitleBar
+    Title.BackgroundTransparency = 1
+    Title.Text = "REQUIRE SCRIPTS 🤫"
+    Title.TextColor3 = Color3.fromRGB(255,255,255)
+    Title.Font = Enum.Font.GothamBold
+    Title.TextSize = 16
+    Title.Size = UDim2.new(1,-40,1,0)
+    Title.Position = UDim2.new(0,10,0,0)
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+
+    local ToggleButton = Instance.new("TextButton")
+    ToggleButton.Parent = TitleBar
+    ToggleButton.Text = "-"
+    ToggleButton.Font = Enum.Font.GothamBold
+    ToggleButton.TextSize = 18
+    ToggleButton.Size = UDim2.new(0,30,1,0)
+    ToggleButton.Position = UDim2.new(1,-35,0,0)
+    ToggleButton.BackgroundColor3 = Color3.fromRGB(70,70,70)
+    ToggleButton.TextColor3 = Color3.fromRGB(255,255,255)
+
+    local NoteLabel = Instance.new("TextLabel")
+    NoteLabel.Parent = MainFrame
+    NoteLabel.BackgroundTransparency = 1
+    NoteLabel.Text = "NOTE: COPY REQUIRE SCRIPTS AND PASTE INTO SS EXECUTER📌"
+    NoteLabel.Font = Enum.Font.SourceSans
+    NoteLabel.TextSize = 12
+    NoteLabel.TextColor3 = Color3.fromRGB(200,200,200)
+    NoteLabel.Size = UDim2.new(1,-10,0,20)
+    NoteLabel.Position = UDim2.new(0,5,0,34)
+    NoteLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    local ContentFrame = Instance.new("Frame")
+    ContentFrame.Parent = MainFrame
+    ContentFrame.BackgroundTransparency = 1
+    ContentFrame.Size = UDim2.new(1,-10,1,-60)
+    ContentFrame.Position = UDim2.new(0,5,0,60)
+
+    local ScrollingFrame = Instance.new("ScrollingFrame")
+    ScrollingFrame.Parent = ContentFrame
+    ScrollingFrame.Size = UDim2.new(1,0,1,0)
+    ScrollingFrame.CanvasSize = UDim2.new(0,0,0,0)
+    ScrollingFrame.ScrollBarThickness = 6
+    ScrollingFrame.BackgroundTransparency = 1
+
+    local UIListLayout = Instance.new("UIListLayout")
+    UIListLayout.Parent = ScrollingFrame
+    UIListLayout.Padding = UDim.new(0,8)
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    local scripts = {
+        {"EGGMAN GUI V2", 'require(93542145255151):LUX("your username")'},
+        {"POLARIA", 'require(123255432303221):Pload("yournamehere")'},
+        {"HAPPY HUB SS", 'require(78790302691160):Hload("user name")'},
+        {"PINK CAR", 'require(4745872847).load("name")'},
+        {"DOOR AMBUSH", 'require(11213747230).ambush("YourUserNameHere")'}
+    }
+
+    for _, data in ipairs(scripts) do
+        local container = Instance.new("Frame")
+        container.Parent = ScrollingFrame
+        container.Size = UDim2.new(1,-10,0,70)
+        container.BackgroundColor3 = Color3.fromRGB(40,40,40)
+        container.BorderSizePixel = 0
+
+        local titleLabel = Instance.new("TextLabel")
+        titleLabel.Parent = container
+        titleLabel.BackgroundTransparency = 1
+        titleLabel.Text = data[1]
+        titleLabel.Font = Enum.Font.GothamBold
+        titleLabel.TextSize = 14
+        titleLabel.TextColor3 = Color3.fromRGB(255,255,255)
+        titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+        titleLabel.Size = UDim2.new(1,-90,0,20)
+        titleLabel.Position = UDim2.new(0,8,0,6)
+
+        local smallLabel = Instance.new("TextLabel")
+        smallLabel.Parent = container
+        smallLabel.BackgroundTransparency = 1
+        smallLabel.Text = data[2]
+        smallLabel.Font = Enum.Font.SourceSans
+        smallLabel.TextSize = 12
+        smallLabel.TextColor3 = Color3.fromRGB(200,200,200)
+        smallLabel.TextXAlignment = Enum.TextXAlignment.Left
+        smallLabel.TextWrapped = true
+        smallLabel.Size = UDim2.new(1,-90,0,36)
+        smallLabel.Position = UDim2.new(0,8,0,26)
+
+        local button = Instance.new("TextButton")
+        button.Parent = container
+        button.Size = UDim2.new(0,70,0,30)
+        button.Position = UDim2.new(1,-78,0.5,-15)
+        button.Text = "COPY"
+        button.Font = Enum.Font.GothamBold
+        button.TextSize = 14
+        button.BackgroundColor3 = Color3.fromRGB(70,70,70)
+        button.TextColor3 = Color3.fromRGB(255,255,255)
+        button.BorderSizePixel = 0
+
+        button.MouseButton1Click:Connect(function()
+            if setclipboard then pcall(setclipboard, data[2]) end
+            local prev = button.Text
+            button.Text = "COPIED!"
+            task.delay(1, function()
+                if button and button.Parent then button.Text = prev end
+            end)
+        end)
+    end
+
+    UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        ScrollingFrame.CanvasSize = UDim2.new(0,0,0, UIListLayout.AbsoluteContentSize.Y + 8)
+    end)
+
+    local originalSize = MainFrame.Size
+    local collapsedSize = UDim2.new(0,360,0,30)
+    local collapsed = false
+
+    ToggleButton.MouseButton1Click:Connect(function()
+        collapsed = not collapsed
+        if collapsed then
+            NoteLabel.Visible = false
+            ContentFrame.Visible = false
+            MainFrame.Size = collapsedSize
+            ToggleButton.Text = "+"
+        else
+            NoteLabel.Visible = true
+            ContentFrame.Visible = true
+            MainFrame.Size = originalSize
+            ToggleButton.Text = "-"
+        end
+    end)
+end
+
+build()
+
+player.CharacterAdded:Connect(function()
+    task.wait(1)
+    if player and player:FindFirstChild("PlayerGui") and not player.PlayerGui:FindFirstChild("RequireScriptsGui") then
+        build()
+    end
+end)
