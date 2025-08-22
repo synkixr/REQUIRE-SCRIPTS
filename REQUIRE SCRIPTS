@@ -1,328 +1,169 @@
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local UIS = game:GetService("UserInputService")
+local player = Players.LocalPlayer
 
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local function build()
+    if not player or not player:FindFirstChild("PlayerGui") then return end
+    if player.PlayerGui:FindFirstChild("RequireScriptsGui") then player.PlayerGui.RequireScriptsGui:Destroy() end
 
-do
-    local prev = PlayerGui:FindFirstChild("FEARLESS_GUI")
-    if prev then prev:Destroy() end
-end
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "RequireScriptsGui"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    ScreenGui.Parent = player.PlayerGui
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "FEARLESS_GUI"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.Parent = PlayerGui
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Name = "MainFrame"
+    MainFrame.Parent = ScreenGui
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+    MainFrame.Size = UDim2.new(0,360,0,320)
+    MainFrame.Position = UDim2.new(0.5,-180,0.5,-160)
+    MainFrame.Active = true
+    MainFrame.Draggable = true
 
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 360, 0, 260)
-MainFrame.Position = UDim2.new(0.5, -180, 0.5, -130)
-MainFrame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-MainFrame.BorderSizePixel = 0
-MainFrame.Parent = ScreenGui
-Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 16)
+    local TitleBar = Instance.new("Frame")
+    TitleBar.Parent = MainFrame
+    TitleBar.BackgroundColor3 = Color3.fromRGB(45,45,45)
+    TitleBar.Size = UDim2.new(1,0,0,30)
+    TitleBar.Position = UDim2.new(0,0,0,0)
 
-spawn(function()
-    while true do
-        local r = (math.sin(tick())/2 + 0.5) * 80 + 60
-        local g = (math.sin(tick()+2)/2 + 0.5) * 80 + 60
-        local b = (math.sin(tick()+4)/2 + 0.5) * 80 + 60
-        MainFrame.BackgroundColor3 = Color3.fromRGB(r,g,b)
-        RunService.RenderStepped:Wait()
-    end
-end)
+    local Title = Instance.new("TextLabel")
+    Title.Parent = TitleBar
+    Title.BackgroundTransparency = 1
+    Title.Text = "REQUIRE SCRIPTS 🤫 (COMPILED BY FEARLESS)"
+    Title.TextColor3 = Color3.fromRGB(255,255,255)
+    Title.Font = Enum.Font.GothamBold
+    Title.TextSize = 16
+    Title.Size = UDim2.new(1,-40,1,0)
+    Title.Position = UDim2.new(0,10,0,0)
+    Title.TextXAlignment = Enum.TextXAlignment.Left
 
-local Img = Instance.new("ImageLabel")
-Img.Size = UDim2.new(0, 100, 0, 100)
-Img.Position = UDim2.new(0, 10, 0, 10)
-Img.BackgroundTransparency = 1
-Img.Image = "rbxassetid://76418305910736"
-Img.Parent = MainFrame
-Instance.new("UICorner", Img).CornerRadius = UDim.new(1, 0)
+    local ToggleButton = Instance.new("TextButton")
+    ToggleButton.Parent = TitleBar
+    ToggleButton.Text = "-"
+    ToggleButton.Font = Enum.Font.GothamBold
+    ToggleButton.TextSize = 18
+    ToggleButton.Size = UDim2.new(0,30,1,0)
+    ToggleButton.Position = UDim2.new(1,-35,0,0)
+    ToggleButton.BackgroundColor3 = Color3.fromRGB(70,70,70)
+    ToggleButton.TextColor3 = Color3.fromRGB(255,255,255)
 
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(0.6, 0, 0, 28)
-Title.Position = UDim2.new(0.35, 0, 0, 15)
-Title.BackgroundTransparency = 1
-Title.Text = "FEARLESS GUI"
-Title.TextColor3 = Color3.fromRGB(255, 0, 0)
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 22
-Title.Parent = MainFrame
-Title.TextStrokeTransparency = 0
-Title.TextStrokeColor3 = Color3.new(0,0,0)
+    local NoteLabel = Instance.new("TextLabel")
+    NoteLabel.Parent = MainFrame
+    NoteLabel.BackgroundTransparency = 1
+    NoteLabel.Text = "NOTE: COPY REQUIRE SCRIPTS AND PASTE INTO SS EXECUTER📌"
+    NoteLabel.Font = Enum.Font.SourceSans
+    NoteLabel.TextSize = 12
+    NoteLabel.TextColor3 = Color3.fromRGB(200,200,200)
+    NoteLabel.Size = UDim2.new(1,-10,0,20)
+    NoteLabel.Position = UDim2.new(0,5,0,34)
+    NoteLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-local Credit = Instance.new("TextLabel")
-Credit.Size = UDim2.new(0.6, 0, 0, 20)
-Credit.Position = UDim2.new(0.35, 0, 0, 45)
-Credit.BackgroundTransparency = 1
-Credit.Text = "Made by @synkixr"
-Credit.TextColor3 = Color3.fromRGB(255, 255, 255)
-Credit.Font = Enum.Font.Gotham
-Credit.TextSize = 14
-Credit.Parent = MainFrame
-Credit.TextStrokeTransparency = 0
-Credit.TextStrokeColor3 = Color3.new(0,0,0)
+    local ContentFrame = Instance.new("Frame")
+    ContentFrame.Parent = MainFrame
+    ContentFrame.BackgroundTransparency = 1
+    ContentFrame.Size = UDim2.new(1,-10,1,-60)
+    ContentFrame.Position = UDim2.new(0,5,0,60)
 
-local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 30, 0, 30)
-CloseBtn.Position = UDim2.new(1, -40, 0, 10)
-CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-CloseBtn.TextColor3 = Color3.new(1, 1, 1)
-CloseBtn.Text = "-"
-CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.TextSize = 20
-CloseBtn.Parent = MainFrame
-Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 8)
+    local ScrollingFrame = Instance.new("ScrollingFrame")
+    ScrollingFrame.Parent = ContentFrame
+    ScrollingFrame.Size = UDim2.new(1,0,1,0)
+    ScrollingFrame.CanvasSize = UDim2.new(0,0,0,0)
+    ScrollingFrame.ScrollBarThickness = 6
+    ScrollingFrame.BackgroundTransparency = 1
 
--- left column (compact, under image)
-local leftX = 10
-local leftWidth = 108
-local leftNoteY = 120
-local leftNoteHeight = 44
-local ssBtnY = leftNoteY + leftNoteHeight + 6
-local requireBtnY = ssBtnY + 34 -- placed under SS EXECUTER
+    local UIListLayout = Instance.new("UIListLayout")
+    UIListLayout.Parent = ScrollingFrame
+    UIListLayout.Padding = UDim.new(0,8)
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-local BackdoorNote = Instance.new("TextLabel")
-BackdoorNote.Size = UDim2.new(0, leftWidth, 0, leftNoteHeight)
-BackdoorNote.Position = UDim2.new(0, leftX, 0, leftNoteY)
-BackdoorNote.BackgroundTransparency = 1
-BackdoorNote.Text = "ONLY FOR BACKDOOR GAMES 👇"
-BackdoorNote.TextColor3 = Color3.fromRGB(255, 255, 255)
-BackdoorNote.Font = Enum.Font.GothamBold
-BackdoorNote.TextSize = 12
-BackdoorNote.TextWrapped = true
-BackdoorNote.TextXAlignment = Enum.TextXAlignment.Center
-BackdoorNote.TextYAlignment = Enum.TextYAlignment.Center
-BackdoorNote.Parent = MainFrame
-BackdoorNote.TextStrokeTransparency = 0.2
-BackdoorNote.TextStrokeColor3 = Color3.new(0,0,0)
+    local scripts = {
+        {"EGGMAN GUI V2", 'require(93542145255151):LUX("your username")'},
+        {"POLARIA", 'require(123255432303221):Pload("yournamehere")'},
+        {"HAPPY HUB SS", 'require(78790302691160):Hload("user name")'},
+        {"PINK CAR", 'require(4745872847).load("name")'},
+        {"DOOR AMBUSH", 'require(11213747230).ambush("YourUserNameHere")'}
+    }
 
-local SSFixedBtn = Instance.new("TextButton")
-SSFixedBtn.Size = UDim2.new(0, leftWidth, 0, 28)
-SSFixedBtn.Position = UDim2.new(0, leftX, 0, ssBtnY)
-SSFixedBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
-SSFixedBtn.TextColor3 = Color3.new(1, 1, 1)
-SSFixedBtn.Font = Enum.Font.GothamBold
-SSFixedBtn.TextSize = 12
-SSFixedBtn.TextWrapped = true
-SSFixedBtn.Text = "SS EXECUTER"
-SSFixedBtn.Parent = MainFrame
-Instance.new("UICorner", SSFixedBtn).CornerRadius = UDim.new(0, 8)
-SSFixedBtn.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/eggmancoolegg/legendary-telegram/refs/heads/main/Ajaja", true))()
-end)
+    for _, data in ipairs(scripts) do
+        local container = Instance.new("Frame")
+        container.Parent = ScrollingFrame
+        container.Size = UDim2.new(1,-10,0,70)
+        container.BackgroundColor3 = Color3.fromRGB(40,40,40)
+        container.BorderSizePixel = 0
 
--- REQUIRE SCRIPTS button (under SS EXECUTER) using your loadstring (space encoded)
-local RequireBtn = Instance.new("TextButton")
-RequireBtn.Size = UDim2.new(0, leftWidth, 0, 28)
-RequireBtn.Position = UDim2.new(0, leftX, 0, requireBtnY)
-RequireBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
-RequireBtn.TextColor3 = Color3.new(1, 1, 1)
-RequireBtn.Font = Enum.Font.GothamBold
-RequireBtn.TextSize = 12
-RequireBtn.TextWrapped = true
-RequireBtn.Text = "REQUIRE SCRIPTS"
-RequireBtn.Parent = MainFrame
-Instance.new("UICorner", RequireBtn).CornerRadius = UDim.new(0, 8)
-RequireBtn.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/abbasmeesam569-netizen/REQUIRE-SCRIPTS/refs/heads/main/REQUIRE%20SCRIPTS", true))()
-end)
+        local titleLabel = Instance.new("TextLabel")
+        titleLabel.Parent = container
+        titleLabel.BackgroundTransparency = 1
+        titleLabel.Text = data[1]
+        titleLabel.Font = Enum.Font.GothamBold
+        titleLabel.TextSize = 14
+        titleLabel.TextColor3 = Color3.fromRGB(255,255,255)
+        titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+        titleLabel.Size = UDim2.new(1,-90,0,20)
+        titleLabel.Position = UDim2.new(0,8,0,6)
 
--- vertical margin full height (after left column)
-local marginX = leftX + leftWidth + 4
-local Margin = Instance.new("Frame")
-Margin.Size = UDim2.new(0, 2, 1, 0)
-Margin.Position = UDim2.new(0, marginX, 0, 0)
-Margin.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Margin.BorderSizePixel = 0
-Margin.Parent = MainFrame
+        local smallLabel = Instance.new("TextLabel")
+        smallLabel.Parent = container
+        smallLabel.BackgroundTransparency = 1
+        smallLabel.Text = data[2]
+        smallLabel.Font = Enum.Font.SourceSans
+        smallLabel.TextSize = 12
+        smallLabel.TextColor3 = Color3.fromRGB(200,200,200)
+        smallLabel.TextXAlignment = Enum.TextXAlignment.Left
+        smallLabel.TextWrapped = true
+        smallLabel.Size = UDim2.new(1,-90,0,36)
+        smallLabel.Position = UDim2.new(0,8,0,26)
 
--- border stroke around GUI with same color as margin
-local stroke = Instance.new("UIStroke")
-stroke.Parent = MainFrame
-stroke.Color = Margin.BackgroundColor3
-stroke.Thickness = 2
-stroke.Transparency = 0
+        local button = Instance.new("TextButton")
+        button.Parent = container
+        button.Size = UDim2.new(0,70,0,30)
+        button.Position = UDim2.new(1,-78,0.5,-15)
+        button.Text = "COPY"
+        button.Font = Enum.Font.GothamBold
+        button.TextSize = 14
+        button.BackgroundColor3 = Color3.fromRGB(70,70,70)
+        button.TextColor3 = Color3.fromRGB(255,255,255)
+        button.BorderSizePixel = 0
 
--- main buttons: kept at original center (no X-shift)
-local function makeBtn(text, y, cb)
-    local b = Instance.new("TextButton")
-    b.Size = UDim2.new(0.50, 0, 0, 32)
-    b.Position = UDim2.new(0.35, 0, y, 0)
-    b.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
-    b.TextColor3 = Color3.new(1, 1, 1)
-    b.Font = Enum.Font.GothamBold
-    b.TextSize = 16
-    b.Text = text
-    b.TextWrapped = false
-    b.Parent = MainFrame
-    Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
-    if cb then b.MouseButton1Click:Connect(cb) end
-    return b
-end
-
-local pages = {}
-local currentPage = 1
-
-pages[1] = {
-    makeBtn("FLY", 0.27, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt", true))()
-    end),
-    makeBtn("FLING", 0.42, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe/main/obf_rf6iQURzu1fqrytcnLBAvW34C9N55kS9g9G3CKz086rC47M6632sEd4ZZYB0AYgV.lua.txt", true))()
-    end),
-    makeBtn("ORBIT PART", 0.57, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/chesslovers69/Super-ring-parts-v6/refs/heads/main/Bylukaslol", true))()
-    end),
-    makeBtn("ADMIN'S GUI", 0.72, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/FE%20Trolling%20GUI.luau", true))()
-    end),
-    makeBtn("BLACK HOLE", 0.87, function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/Ax87RCd5", true))()
-    end)
-}
-
-pages[2] = {
-    makeBtn("NAMELESS ADMIN", 0.27, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source", true))()
-    end),
-    makeBtn("C00LKIDD GUI", 0.42, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/cfsmi2/c00lguiv1/refs/heads/main/Main.lua", true))();
-    end),
-    (function()
-        local b = makeBtn("FE SCRIPTS\n@SYPCERR", 0.57, function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/sypcerr/FECollection/refs/heads/main/script.lua",true))()
-        end)
-        b.TextWrapped = true
-        b.TextSize = 14
-        return b
-    end)(),
-    makeBtn("UGC EMOTES", 0.72, function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/1nJD7PkH", true))()
-    end),
-    makeBtn("FAKE LAG FE", 0.87, function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/RENZXW/RENZXW-SCRIPTS/main/fakeLAGRENZXW.txt", true))()
-    end)
-}
-
-pages[3] = {
-    makeBtn("SOON", 0.27),
-    makeBtn("SOON", 0.42),
-    makeBtn("SOON", 0.57),
-    makeBtn("SOON", 0.72),
-    makeBtn("SOON", 0.87)
-}
-
-for _, btn in pairs(pages[2]) do btn.Visible = false end
-for _, btn in pairs(pages[3]) do btn.Visible = false end
-
-local PageLabel = Instance.new("TextLabel")
-PageLabel.Size = UDim2.new(0, 60, 0, 22)
-PageLabel.Position = UDim2.new(0, 300, 0.5, -11)
-PageLabel.BackgroundTransparency = 1
-PageLabel.Text = ""
-PageLabel.TextColor3 = Color3.fromRGB(255,255,255)
-PageLabel.Font = Enum.Font.GothamBold
-PageLabel.TextSize = 12
-PageLabel.TextXAlignment = Enum.TextXAlignment.Center
-PageLabel.TextYAlignment = Enum.TextYAlignment.Center
-PageLabel.Parent = MainFrame
-PageLabel.TextStrokeTransparency = 0
-PageLabel.TextStrokeColor3 = Color3.new(0,0,0)
-
-local LeftArrow = Instance.new("TextButton")
-LeftArrow.Size = UDim2.new(0, 40, 0, 28)
-LeftArrow.Position = UDim2.new(0, 20, 0.92, 0)
-LeftArrow.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
-LeftArrow.TextColor3 = Color3.new(1, 1, 1)
-LeftArrow.Text = "<"
-LeftArrow.Font = Enum.Font.GothamBold
-LeftArrow.TextSize = 18
-LeftArrow.Parent = MainFrame
-Instance.new("UICorner", LeftArrow).CornerRadius = UDim.new(0, 6)
-
-local RightArrow = Instance.new("TextButton")
-RightArrow.Size = UDim2.new(0, 40, 0, 28)
-RightArrow.Position = UDim2.new(0, 312, 0.92, 0)
-RightArrow.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
-RightArrow.TextColor3 = Color3.new(1, 1, 1)
-RightArrow.Text = ">"
-RightArrow.Font = Enum.Font.GothamBold
-RightArrow.TextSize = 18
-RightArrow.Parent = MainFrame
-Instance.new("UICorner", RightArrow).CornerRadius = UDim.new(0, 6)
-
-local function setPageLabel()
-    PageLabel.Text = ("Page %d/%d"):format(currentPage, #pages)
-end
-setPageLabel()
-
-local function switchPage(pageNum)
-    if pageNum < 1 or pageNum > #pages then return end
-    for _, btn in pairs(pages[currentPage]) do btn.Visible = false end
-    for _, btn in pairs(pages[pageNum]) do btn.Visible = true end
-    currentPage = pageNum
-    setPageLabel()
-end
-
-LeftArrow.MouseButton1Click:Connect(function()
-    if currentPage > 1 then switchPage(currentPage - 1) end
-end)
-
-RightArrow.MouseButton1Click:Connect(function()
-    if currentPage < #pages then switchPage(currentPage + 1) end
-end)
-
-CloseBtn.MouseButton1Click:Connect(function()
-    MainFrame.Visible = false
-end)
-
-local ToggleBtn = Instance.new("TextButton")
-ToggleBtn.Name = "FEARLESS_Toggle"
-ToggleBtn.Size = UDim2.new(0, 44, 0, 44)
-ToggleBtn.Position = UDim2.new(0, 10, 0, 10)
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-ToggleBtn.Text = "GUI"
-ToggleBtn.TextColor3 = Color3.new(1, 1, 1)
-ToggleBtn.Font = Enum.Font.GothamBold
-ToggleBtn.TextSize = 14
-ToggleBtn.Parent = ScreenGui
-Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(1, 0)
-
-ToggleBtn.MouseButton1Click:Connect(function()
-    MainFrame.Visible = not MainFrame.Visible
-end)
-
-local dragging, dragInput, dragStart, startPos
-local function update(input)
-    local d = input.Position - dragStart
-    MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
-end
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then dragging = false end
+        button.MouseButton1Click:Connect(function()
+            if setclipboard then pcall(setclipboard, data[2]) end
+            local prev = button.Text
+            button.Text = "COPIED!"
+            task.delay(1, function()
+                if button and button.Parent then button.Text = prev end
+            end)
         end)
     end
-end)
-MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        dragInput = input
-    end
-end)
-UIS.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then update(input) end
-end)
 
-local hue = 0
-RunService.RenderStepped:Connect(function()
-    hue = (hue + 0.003) % 1
-    MainFrame.BackgroundColor3 = Color3.fromHSV(hue, 0.75, 1)
-    Title.TextColor3 = Color3.fromHSV((hue + 0.5) % 1, 0.9, 1)
+    UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        ScrollingFrame.CanvasSize = UDim2.new(0,0,0, UIListLayout.AbsoluteContentSize.Y + 8)
+    end)
+
+    local originalSize = MainFrame.Size
+    local collapsedSize = UDim2.new(0,360,0,30)
+    local collapsed = false
+
+    ToggleButton.MouseButton1Click:Connect(function()
+        collapsed = not collapsed
+        if collapsed then
+            NoteLabel.Visible = false
+            ContentFrame.Visible = false
+            MainFrame.Size = collapsedSize
+            ToggleButton.Text = "+"
+        else
+            NoteLabel.Visible = true
+            ContentFrame.Visible = true
+            MainFrame.Size = originalSize
+            ToggleButton.Text = "-"
+        end
+    end)
+end
+
+build()
+
+player.CharacterAdded:Connect(function()
+    task.wait(1)
+    if player and player:FindFirstChild("PlayerGui") and not player.PlayerGui:FindFirstChild("RequireScriptsGui") then
+        build()
+    end
 end)
